@@ -57,6 +57,6 @@ class Conf:
     @simple_env_var.section
     class Tesla:
         email = "elon@tesla.com"
-        refreshToken = ""
+        refreshtoken = ""
 
 conf = Conf()

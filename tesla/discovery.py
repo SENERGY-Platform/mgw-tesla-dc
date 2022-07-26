@@ -41,7 +41,7 @@ class Discovery(threading.Thread):
 
         with teslapy.Tesla(conf.Tesla.email, cache_file="./.cache/cache.json") as tesla:
             if not tesla.authorized:
-                tesla.refresh_token(refresh_token=conf.Tesla.refreshToken)
+                tesla.refresh_token(refresh_token=conf.Tesla.refreshtoken)
             vehicles = tesla.vehicle_list()
 
         for v in vehicles:
