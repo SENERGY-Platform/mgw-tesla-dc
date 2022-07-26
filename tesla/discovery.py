@@ -69,7 +69,6 @@ class Discovery(threading.Thread):
             devices[id] = TeslaVehicle(id=id, name=v["display_name"], type=conf.Senergy.dt_tesla_vehicle,
                                        state=device_state.online if v.available() else device_state.offline,
                                        vehicle=v, attributes=attributes)
-            v.stream()  # TODO
 
         logger.info("Discovered " + str(len(devices)) + " vehicles")
         return devices
