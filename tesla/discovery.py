@@ -51,7 +51,7 @@ class Discovery(threading.Thread):
 
             attributes = [
                 {"key": "manufacturer", "value": decoded_vin["manufacturer"]},
-                {"key": "tesla/vehicle_id", "value": v["vehicle_id"]},
+                {"key": "tesla/vehicle_id", "value": str(v["vehicle_id"])},
                 {"key": "motor-vehicle/vin", "value": v["vin"]},
                 {"key": "motor-vehicle/make", "value": decoded_vin["make"]},
                 {"key": "tesla/body_type", "value": decoded_vin["body_type"]},
@@ -61,10 +61,10 @@ class Discovery(threading.Thread):
                 {"key": "production_year", "value": decoded_vin["year"]},
                 {"key": "tesla/plant_code", "value": decoded_vin["plant_code"]},
                 {"key": "tesla/option_codes", "value": v["option_codes"]},
-                {"key": "tesla/color", "value": v["color"]},
-                {"key": "tesla/in_service", "value": v["in_service"]},
-                {"key": "tesla/calendar_enabled", "value": v["calendar_enabled"]},
-                {"key": "tesla/api_version", "value": v["api_version"]},
+                {"key": "tesla/color", "value": str(v["color"])},
+                {"key": "tesla/in_service", "value": str(v["in_service"])},
+                {"key": "tesla/calendar_enabled", "value": str(v["calendar_enabled"])},
+                {"key": "tesla/api_version", "value": str(v["api_version"])},
             ]
             devices[id] = TeslaVehicle(id=id, name=v["display_name"], type=conf.Senergy.dt_tesla_vehicle,
                                        state=device_state.online if v.available() else device_state.offline,
