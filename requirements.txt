@@ -3,7 +3,4 @@ git+https://github.com/SENERGY-Platform/mgw-dc-lib.git@973b4895c81de07ee18749faf
 paho-mqtt>=1.4.0,<1.6
 pycryptodome<4.0.0
 schedule==1.1.0
-pytz
-rfc3339
-requests
 TeslaPy==2.6.0
