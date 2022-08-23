@@ -33,16 +33,15 @@ class Discovery(threading.Thread):
     def __init__(self, device_manager: DeviceManager):
         super().__init__(name="discovery", daemon=True)
         self._device_manager = device_manager
+        self.tesla = teslapy.Tesla(conf.Tesla.email, cache_file="./.cache/cache.json")
 
-    @staticmethod
-    def get_tesla_devices() -> Dict[str, TeslaVehicle]:
+    def get_tesla_devices(self) -> Dict[str, TeslaVehicle]:
         logger.info("Starting scan")
         devices: Dict[str, TeslaVehicle] = {}
 
-        with teslapy.Tesla(conf.Tesla.email, cache_file="./.cache/cache.json") as tesla:
-            if not tesla.authorized:
-                tesla.refresh_token(refresh_token=conf.Tesla.refreshtoken)
-            vehicles = tesla.vehicle_list()
+        if not self.tesla.authorized:
+            self.tesla.refresh_token(refresh_token=conf.Tesla.refreshtoken)
+        vehicles = self.tesla.vehicle_list()
 
         for v in vehicles:
             logger.info("Discovered '" + v["display_name"] + "' with ID " + str(v["id"]))

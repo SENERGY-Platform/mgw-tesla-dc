@@ -52,13 +52,16 @@ class Command:
         if device_id not in self.device_manager.get_devices():
             logger.error("device unknown " + device_id)
             return
+        device = self.device_manager.get_devices()[device_id]
+        vehicle = device.get_vehicle()
+        if not vehicle.tesla.authorized:
+            vehicle.tesla.refresh_token(refresh_token=conf.Tesla.refreshtoken)
         try:
             if service not in command_handlers:
-                vehicle = self.device_manager.get_devices()[device_id].get_vehicle()
                 vehicle.sync_wake_up()
                 result = vehicle.command(service, **payload)
             else:
-                result = command_handlers[service](self.device_manager, self.device_manager.get_devices()[device_id], payload)
+                result = command_handlers[service](self.device_manager, device, payload)
         except Exception as ex:
             logger.error("Command failed: {}".format(ex))
             logger.error(traceback.format_exc())
