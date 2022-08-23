@@ -17,9 +17,10 @@ import typing
 import teslapy
 
 from util import TeslaVehicle, DeviceManager
+from mgw_dc.dm import device_state
 
 
-def handle_get_vehicle_data(manager: DeviceManager, device: TeslaVehicle, device_state=None, *args, **kwargs) -> typing.Dict:
+def handle_get_vehicle_data(manager: DeviceManager, device: TeslaVehicle, *args, **kwargs) -> typing.Dict:
     vehicle = device.get_vehicle()
     try:
         vehicle.sync_wake_up(timeout=25)
