@@ -14,6 +14,7 @@
    limitations under the License.
 """
 import json
+import traceback
 import typing
 
 import mgw_dc
@@ -60,6 +61,7 @@ class Command:
                 result = command_handlers[service](self.device_manager, self.device_manager.get_devices()[device_id], payload)
         except Exception as ex:
             logger.error("Command failed: {}".format(ex))
+            logger.error(traceback.format_exc())
             if is_event:
                 self.mqtt_client.publish("error/device/" + device_id, str(ex), 1)
             else:

@@ -13,11 +13,14 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 """
+import traceback
 import typing
 import teslapy
 
-from util import TeslaVehicle, DeviceManager
+from util import TeslaVehicle, DeviceManager, get_logger
 from mgw_dc.dm import device_state
+
+logger = get_logger(__name__.split(".", 1)[-1])
 
 
 def handle_get_vehicle_data(manager: DeviceManager, device: TeslaVehicle, *args, **kwargs) -> typing.Dict:
@@ -25,6 +28,7 @@ def handle_get_vehicle_data(manager: DeviceManager, device: TeslaVehicle, *args,
     try:
         vehicle.sync_wake_up(timeout=25)
     except teslapy.VehicleError as e:
+        logger.error(traceback.format_exc())
         device.state = device_state.online if vehicle.available() else device_state.offline
         manager.handle_existing_device(device)
         raise e
