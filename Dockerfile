@@ -1,4 +1,4 @@
-FROM python:3-slim-buster
+FROM python:3.14-slim-trixie
 
 LABEL org.opencontainers.image.source https://github.com/SENERGY-Platform/mgw-tesla-dc
 
